@@ -1,4 +1,4 @@
-name: Linella scrape
+name: Metro scrape
 
 on:
   workflow_dispatch:
@@ -9,6 +9,8 @@ on:
 permissions:
   contents: write
 
+# Linella and Metro both commit snapshots to main. A shared concurrency group
+# prevents simultaneous pushes from racing with one another.
 concurrency:
   group: retail-scrape-commit
   cancel-in-progress: false
@@ -27,22 +29,22 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
-          cache-dependency-path: requirements-linella.txt
+          cache-dependency-path: requirements-metro.txt
 
       - name: Install dependencies
-        run: pip install -r requirements-linella.txt
+        run: pip install -r requirements-metro.txt
 
-      - name: Scrape Linella
-        run: python linella_scraper.py
+      - name: Scrape Metro
+        run: python metro_scraper.py
 
       - name: Commit snapshot
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Linella/linella_scrape_*.json
+          git add Metro/metro_scrape_*.json
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0
           fi
-          git commit -m "Update Linella $(TZ=Europe/Chisinau date +%Y%m%d)"
+          git commit -m "Update Metro $(TZ=Europe/Chisinau date +%Y%m%d)"
           git push
