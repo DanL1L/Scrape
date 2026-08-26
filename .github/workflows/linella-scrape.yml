@@ -45,4 +45,5 @@ jobs:
             exit 0
           fi
           git commit -m "Update Linella $(TZ=Europe/Chisinau date +%Y%m%d)"
+          git pull --rebase origin main
           git push
