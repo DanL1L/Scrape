@@ -17,7 +17,8 @@ from tqdm import tqdm
 from urllib3.util.retry import Retry
 
 
-SITEMAP_URL = "https://linella.md/sitemap-products-en.xml"
+SITEMAP_URL = "https://linella.md/products2.xml"
+
 OUTPUT_DIRECTORY = Path("Linella")
 TIMEZONE = ZoneInfo("Europe/Chisinau")
 MAX_WORKERS = 20
